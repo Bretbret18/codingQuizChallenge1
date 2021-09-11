@@ -1,7 +1,3 @@
-
-const timeAmount = document.querySelector('#timeAmount');
-const highScoresBtn = document.querySelector('#highScoresBtn');
-
 // questions array
 const questionArray = [
     {
@@ -29,24 +25,24 @@ const questionArray = [
     },
     {
         // questions array (2)
-        question: 'test two',
+        question: 'Exam Deux',
         // answers array (2)
         answers: [
             {
-                option: 'answer one',
+                option: 'Un',
                 isCorrect: false
             },
             {
-                option: 'answer two',
-                isCorrect: false
-            },
-            {
-                option: 'answer three',
-                isCorrect: false
-            },
-            {
-                option: 'answer four',
+                option: 'Deux',
                 isCorrect: true
+            },
+            {
+                option: 'Trois',
+                isCorrect: false
+            },
+            {
+                option: 'Quatre',
+                isCorrect: false
             }
         ]
         // end answers array (2)
@@ -57,7 +53,7 @@ const questionArray = [
         answers: [
             {
                 option: 'answer one',
-                isCorrect: false
+                isCorrect: true
             },
             {
                 option: 'answer two',
@@ -69,7 +65,7 @@ const questionArray = [
             },
             {
                 option: 'answer four',
-                isCorrect: true
+                isCorrect: false
             }
         ]
         // answers array end
@@ -109,7 +105,7 @@ const questionArray = [
             },
             {
                 option: 'answer two',
-                isCorrect: false
+                isCorrect: true
             },
             {
                 option: 'answer three',
@@ -117,66 +113,89 @@ const questionArray = [
             },
             {
                 option: 'answer four',
-                isCorrect: true
+                isCorrect: false
             }
         ]
         // end answers array (2)
     }
 ];
 
+const timeAmount = document.querySelector('#timeAmount');
+const highScoresBtn = document.querySelector('#highScoresBtn');
+
+let quizBox = document.querySelector('#questions');
+let questionArea = document.querySelector('.question');
+let answersBox = document.querySelector('#answers');
+
+let answerBtns = document.querySelectorAll('.answer');
+let answerTags = document.getElementsByTagName('button');
+// console.log(answerTags[2]);
+
+let currentItem = 1;
+
+let currentQuestionItem = 0;
+let currentAnswerItem = 0;
+
+let currentQuestion = questionArray[currentItem].question;
+console.log(currentQuestion);
+let currentAnswerArray = questionArray[currentItem].answers;
+console.log(currentAnswerArray);
+
+// single answer item = option / isCorrect
+let singleAnswerItem = questionArray[currentItem].answers[currentItem];
+console.log(singleAnswerItem);
 
 
-// Created quiz box using javascript/ manipulating the DOM
-let questionBox = document.querySelector('#questions');
+// Load functions on page load
+window.addEventListener('DOMContentLoaded', function () {
+    renderQuestions();
+    renderAnswers();
+});
 
-function renderQuestions() {
+// add event listener on btns and iterate on true clicks
+answerBtns.forEach(function (btn) {
     
-    questionBox.className = 'box';
-    questionBox.innerHTML = `<div>
-<h2> Quiz Box </h2> <br/>
-    <h4>${questionArray[0].question}</h4> <br/>
-    <button class="answersBtn btn-1"><h5>${questionArray[0].answers[0].option}</h5></button> <br/>
-    <button class="answersBtn btn-2"><h5>${questionArray[0].answers[1].option}</h5></button> <br/>
-    <button class="answersBtn btn-3"><h5>${questionArray[0].answers[2].option}</h5></button> <br/>
-    <button class="answersBtn btn-4"><h5>${questionArray[0].answers[3].option}</h5></button> <br/>
-    </div>`;
-    answerFunction()
+    btn.addEventListener('click', function () {
+        console.log(btn);
 
-    
-};
-
-function answerFunction () {
-    let answersBtns = document.querySelectorAll('.answersBtn');
-    console.log(answersBtns);
-
-    answersBtns.forEach(function (btn) {
-        btn.addEventListener('click', function (e) {
-            console.log(e.currentTarget.className);
-            if (e.currentTarget.className != 'answersBtn btn-4') {
-                return
-            } else {
-                nextQuestion()
-            }
-        });
     });
+});
+
+// capture questions from questionsArray for iteration
+function renderQuestions() {
+    // questionIterator relies on current item to change
+    // console.log(currentQuestion);
+    currentItem++
+    quizBox.className = 'box';
+    questionArea.className = 'question';
+    questionArea.innerHTML = currentQuestion;
+};
+
+// capture answers from questionsArray for iteration
+function renderAnswers() {
+    // answerIterator relies on current item to change
+    currentItem++
+
+    answersBox.className = 'answers';
+    answerTags[1].innerHTML = `${currentAnswerArray[0].option}`;
+    answerTags[2].innerHTML = `${currentAnswerArray[1].option}`;
+    answerTags[3].innerHTML = `${currentAnswerArray[2].option}`;
+    answerTags[4].innerHTML = `${currentAnswerArray[3].option}`;
+};
+
+function findCorrectAnswer() {
+
 };
 
 
 
-function nextQuestion() {
-    
-    questionBox.className = 'box';
-    questionBox.innerHTML = `<div>
-<h2> Quiz Box </h2> <br/>
-    <h4>${questionArray[1].question}</h4> <br/>
-    <button class="answersBtn btn-1"><h5>${questionArray[1].answers[0].option}</h5></button> <br/>
-    <button class="answersBtn btn-2"><h5>${questionArray[1].answers[1].option}</h5></button> <br/>
-    <button class="answersBtn btn-3"><h5>${questionArray[1].answers[2].option}</h5></button> <br/>
-    <button class="answersBtn btn-4"><h5>${questionArray[1].answers[3].option}</h5></button> <br/>
-    </div>`;
-};
 
-renderQuestions()
+
+
+
+
+
+
 
 
 

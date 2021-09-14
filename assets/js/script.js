@@ -126,76 +126,52 @@ const highScoresBtn = document.querySelector('#highScoresBtn');
 let quizBox = document.querySelector('#questions');
 let questionArea = document.querySelector('.question');
 let answersBox = document.querySelector('#answers');
+let answerBtns = document.querySelectorAll('#btn');
 
-let answerBtns = document.querySelectorAll('.answer');
-let answerTags = document.getElementsByTagName('button');
-// console.log(answerTags[2]);
+let currentItem = 0;
+let questionIndex = 0;
+let answerIndex = 0;
 
-let currentItem = 1;
-
-let currentQuestionItem = 0;
-let currentAnswerItem = 0;
-
-let currentQuestion = questionArray[currentItem].question;
-console.log(currentQuestion);
 let currentAnswerArray = questionArray[currentItem].answers;
-console.log(currentAnswerArray);
 
-// single answer item = option / isCorrect
-let singleAnswerItem = questionArray[currentItem].answers[currentItem];
-console.log(singleAnswerItem);
+function renderQuestions() {
+    
+    quizBox.className = 'box';
+    questionArea.className = 'question';
+    questionArea.innerHTML = questionArray[currentItem].question;
+    answersBox.className = 'answers';
+    function answerLoop(){
+    for (let i = 0; i < questionArray.length - 1; i++) {
+        console.log(answerBtns[i]);
+        console.log(i);
+        answerBtns[i].innerHTML = currentAnswerArray[i].option;
+        answerBtns[i].value = currentAnswerArray[i].isCorrect;
+        
+    }
+}
+    answerBtns.forEach(function (btn) {
 
+        btn.addEventListener('click', function (e) {
+            console.log(btn);
+            if (btn.value === 'true') {
+                console.log('true');
+                nextQuestion()
+                answerLoop()
+                // logging currentAnswerArray and questionArray[currentItem].answers fires different results!
+                console.log(questionArray[currentItem].answers);
+            }
+            
+        })
+    });
+    answerLoop()
+};
 
 // Load functions on page load
 window.addEventListener('DOMContentLoaded', function () {
     renderQuestions();
-    renderAnswers();
 });
 
-// add event listener on btns and iterate on true clicks
-answerBtns.forEach(function (btn) {
-    
-    btn.addEventListener('click', function () {
-        console.log(btn);
-
-    });
-});
-
-// capture questions from questionsArray for iteration
-function renderQuestions() {
-    // questionIterator relies on current item to change
-    // console.log(currentQuestion);
+function nextQuestion() {
     currentItem++
-    quizBox.className = 'box';
-    questionArea.className = 'question';
-    questionArea.innerHTML = currentQuestion;
+    renderQuestions()
 };
-
-// capture answers from questionsArray for iteration
-function renderAnswers() {
-    // answerIterator relies on current item to change
-    currentItem++
-
-    answersBox.className = 'answers';
-    answerTags[1].innerHTML = `${currentAnswerArray[0].option}`;
-    answerTags[2].innerHTML = `${currentAnswerArray[1].option}`;
-    answerTags[3].innerHTML = `${currentAnswerArray[2].option}`;
-    answerTags[4].innerHTML = `${currentAnswerArray[3].option}`;
-};
-
-function findCorrectAnswer() {
-
-};
-
-
-
-
-
-
-
-
-
-
-
-
-

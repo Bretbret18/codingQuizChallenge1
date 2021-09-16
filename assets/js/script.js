@@ -25,46 +25,46 @@ const questionArray = [
     },
     {
         // questions array (2)
-        question: 'Exam Deux',
+        question: 'What is your favourite colour?',
         // answers array (2)
         answers: [
             {
-                option: 'Un',
+                option: 'Green',
                 isCorrect: false
             },
             {
-                option: 'Deux',
+                option: 'Black',
                 isCorrect: true
             },
             {
-                option: 'Trois',
+                option: 'Blue',
                 isCorrect: false
             },
             {
-                option: 'Quatre',
+                option: 'Yellow',
                 isCorrect: false
             }
         ]
         // end answers array (2)
     },
     {
-        question: 'test three',
+        question: 'What is 7 x 8?',
         // answers array
         answers: [
             {
-                option: 'answer one',
+                option: '56',
                 isCorrect: true
             },
             {
-                option: 'answer two',
+                option: '49',
                 isCorrect: false
             },
             {
-                option: 'answer three',
+                option: '64',
                 isCorrect: false
             },
             {
-                option: 'answer four',
+                option: '58',
                 isCorrect: false
             }
         ]
@@ -72,23 +72,23 @@ const questionArray = [
     },
     {
         // questions array (2)
-        question: 'test four',
+        question: 'What is not a type of food?',
         // answers array (2)
         answers: [
             {
-                option: 'answer one',
+                option: 'Hamburger',
                 isCorrect: false
             },
             {
-                option: 'answer two',
+                option: 'Pretzel',
                 isCorrect: false
             },
             {
-                option: 'answer three',
+                option: 'Pizza',
                 isCorrect: false
             },
             {
-                option: 'answer four',
+                option: 'Cement',
                 isCorrect: true
             }
         ]
@@ -96,23 +96,23 @@ const questionArray = [
     },
     {
         // questions array (2)
-        question: 'test five',
+        question: 'Does pizza taste good?',
         // answers array (2)
         answers: [
             {
-                option: 'answer one',
+                option: 'No',
                 isCorrect: false
             },
             {
-                option: 'answer two',
+                option: 'Yes',
                 isCorrect: true
             },
             {
-                option: 'answer three',
+                option: 'No',
                 isCorrect: false
             },
             {
-                option: 'answer four',
+                option: 'No',
                 isCorrect: false
             }
         ]
@@ -120,6 +120,8 @@ const questionArray = [
     }
 ];
 
+const highScoresPage = document.querySelector('.end-game');
+// const highScoresPage = document.querySelector('#high-scores');
 const timeAmount = document.querySelector('#timeAmount');
 const highScoresBtn = document.querySelector('#highScoresBtn');
 
@@ -127,51 +129,56 @@ let quizBox = document.querySelector('#questions');
 let questionArea = document.querySelector('.question');
 let answersBox = document.querySelector('#answers');
 let answerBtns = document.querySelectorAll('#btn');
+let restartQuiz = document.querySelector('.restart');
 
 let currentItem = 0;
-let questionIndex = 0;
-let answerIndex = 0;
-
 let currentAnswerArray = questionArray[currentItem].answers;
 
-function renderQuestions() {
-    
+
+function runQuiz() {
+    highScoresPage.style.display = 'none';
+    answersBox.className = 'answers';
     quizBox.className = 'box';
     questionArea.className = 'question';
     questionArea.innerHTML = questionArray[currentItem].question;
-    answersBox.className = 'answers';
-    function answerLoop(){
-    for (let i = 0; i < questionArray.length - 1; i++) {
-        console.log(answerBtns[i]);
-        console.log(i);
-        answerBtns[i].innerHTML = currentAnswerArray[i].option;
-        answerBtns[i].value = currentAnswerArray[i].isCorrect;
-        
-    }
-}
-    answerBtns.forEach(function (btn) {
 
+    answerBtns.forEach(function (btn, i) {
+        btn.innerHTML = questionArray[currentItem].answers[i].option;
+        btn.value = questionArray[currentItem].answers[i].isCorrect;
+        console.log(btn);
         btn.addEventListener('click', function (e) {
-            console.log(btn);
-            if (btn.value === 'true') {
-                console.log('true');
-                nextQuestion()
-                answerLoop()
-                // logging currentAnswerArray and questionArray[currentItem].answers fires different results!
-                console.log(questionArray[currentItem].answers);
+            if (e.currentTarget.value === 'true') {
+                currentItem++
+                console.log(currentItem);
+                if (currentItem >= 5) {
+                    console.log('now');
+                    quizBox.style.display = 'none';
+                    highScoresPage.style.display = 'block';
+                    restartQuiz.addEventListener('click', function (e) {
+                        resetQuiz()
+                    })
+                    return
+                };
+                answerBtns.forEach(function (answer, i) {
+
+                    answer.innerHTML = questionArray[currentItem].answers[i].option;
+                    answer.value = questionArray[currentItem].answers[i].isCorrect;
+                    console.log(currentItem);
+                })
+                questionArea.innerHTML = questionArray[currentItem].question;
+            } else {
+
+                return
             }
-            
         })
     });
-    answerLoop()
-};
+}
 
-// Load functions on page load
-window.addEventListener('DOMContentLoaded', function () {
-    renderQuestions();
-});
+function resetQuiz() {
+    currentItem = 0;
+    quizBox.style.display = 'block';
+    highScoresPage.style.display = 'none';
+    runQuiz()
+}
 
-function nextQuestion() {
-    currentItem++
-    renderQuestions()
-};
+runQuiz()

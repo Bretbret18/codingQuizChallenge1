@@ -77,9 +77,42 @@ let currentQuestion = questionArray[currentItem].question;
 // let answer3Value = currentAnswerArray[2].isCorrect;
 // let answer4Value = currentAnswerArray[3].isCorrect;
 
+//////////////////////////////////////////////////////////
 
+// function assignAnswers() {
+    
+//     for (let i = 0; i < questionArray.length - 1; i++) {
+//         console.log(answerBtns[i]);
+//         console.log(i);
+        
+//         answerBtns[i].innerHTML = questionArray[currentItem].answers[i].option;
+//         answerBtns[i].value = questionArray[currentItem].answers[i].isCorrect;
+        
+       
+//     }
+// }
 
+//////////////////////////////////////////////////////////
 
+// answerBtns.forEach(function (btn) {
+//     // PROBLEMS:
+//     // Neither value or innerHTML change upon first correct click
+//     btn.addEventListener('click', function (e) {
+//         console.log(btn);
+//         if (e.currentTarget.value === 'true' || e.currentTarget.value === true) {
+//             console.log('true');
+//             currentItem++
+
+//             // logging currentAnswerArray and questionArray[currentItem].answers fires different results!
+//             console.log(questionArray[currentItem].answers);
+//         } else {
+//             console.log('false');
+//             return
+//         }
+//         console.log(questionArray[currentItem].answers);
+
+//     })
+// });
 
 
 
